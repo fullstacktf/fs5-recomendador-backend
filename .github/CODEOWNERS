@@ -1,1 +1,5 @@
 * @Aletf7 @japmelian @Meldavmar
+*.ts @raulanatol
+*.js @raulanatol
+*test* @raulanatol @DanielRamosAcosta @yodralopez
+*.go @manolors
