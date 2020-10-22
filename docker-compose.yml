@@ -1,0 +1,21 @@
+services:
+        server:
+                build: ./backend
+                container_name: "recomendador_backend"
+                ports:
+                        - "80:80"
+                networks:
+                        - backend
+        db:
+                image: mariadb:10.5.6
+                container_name: "recomendador_db"
+                environments:
+                        MYSQL_ROOT_PASSWORD: default
+                        MYSQL_DATABASE: bbdd
+                        MYSQL_USER: user
+                        MYSQL_PASSWORD: default
+                networks:
+                        - backend
+networks:
+        backend:
+                name: "recomendador_network"
