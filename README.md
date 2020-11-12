@@ -16,4 +16,4 @@ This data has been cleaned and proccessed in order to fullfill the requirements 
 ## Database schema
 This is the first version of our relational database schema.
 
-![Database schema](./db-info/scjema/db-schema.png)
+![Database schema](./static-files/db-schema.png)
