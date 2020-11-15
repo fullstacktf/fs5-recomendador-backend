@@ -17,3 +17,25 @@ This data has been cleaned and proccessed in order to fullfill the requirements 
 This is the first version of our relational database schema.
 
 ![Database schema](./static-files/db-schema.png)
+
+## Endpoints definition
+In the above table there is a detailed information about the endpoints of our app.
+
+**ENTITY**|**TYPE**|**URL**|**PERMISSIONS**|**EXPLANATION**
+:-----:|:-----:|:-----|:-----:|:-----
+media|DELETE|/media/:id\_media|admin|Delete media id\_media
+media|GET|/media|users|Return a list of all media items
+media|GET|/media/:id\_media|users|Returns a media by id\_media
+media|GET|/media/tag/:id\_tag|users|Returns all media items tagged by id\_tag
+media|POST|/media|admin|New media item
+media|PUT|/media/:id\_media|admin|Update media by id\_media
+mediatags|POST|/mediatags|admin|New mediatag (add a EXISTING tag to a movie)
+mediatags|PUT|/mediatags/:id\_media|admin|Update the tags of id\_media
+ratings|PUT|/ratings/:id\_user/:id\_media|users|Update the rating of id\_user for id\_media
+tags|DELETE|/tags/:id\_tag|admin|Delete the tag id\_tag
+tags|GET|/tags|users|Return a list of all tags
+tags|POST|/tags|admin|New tag
+users|DELETE|/users/:id\_user|users|Delete user
+users|GET|/users|admin|Return a list of all users
+users|GET|/users/:id\_user|admin|Return a specific user by id\_user
+users|PUT|/users/:id\_user|users|Update user info by id\_user
