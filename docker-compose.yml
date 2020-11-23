@@ -1,17 +1,16 @@
 services:
-        server:
-                build: ./backend
-                container_name: "recomendador_backend"
-                ports:
-                        - "80:80"
-                networks:
-                        - backend
-        db:
-                image: mongo:3.6
-                container_name: "recomendador_db"
-                restart: always
-                networks:
-                        - backend
+  db:
+    image: mongo:3.6
+    container_name: "recomendador_db"
+    restart: always
+    networks:
+      - backend
+    volumes:
+      - ./database/init-data:/data/init-data
+      - ./database/scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "27017:27017"
+
 networks:
-        backend:
-                name: "recomendador_network"
+  backend:
+    name: "recomendador_network"
