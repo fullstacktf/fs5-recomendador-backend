@@ -1,6 +1,6 @@
-FROM node:14.14.0
-RUN apt-get update
-WORKDIR /app
-COPY src/* /app
+FROM node:12.19.0
+WORKDIR /home/node/app
+COPY . /home/node/app
+RUN npm install && npm run build
 EXPOSE 80
-CMD ["node", "app.js"]
+CMD [ "node", "src/index.js" ]
