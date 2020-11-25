@@ -1,4 +1,5 @@
-import { Collection, FilterQuery, ObjectId, OptionalId } from 'mongodb';
+import { Media } from "../media/models";
+import { Collection, FilterQuery, ObjectId, OptionalId, UpdateQuery } from 'mongodb';
 import { BaseModel, Database } from '../../helpers/Database';
 
 type Query<T> = FilterQuery<T | { _id: string }>;
@@ -62,6 +63,24 @@ export class BaseRepository<T extends BaseModel> {
         });
     };
 
+    async deleteOne(query: Query<T>) {
+        return new Promise((resolve, reject) => {
+            this.getCollection()
+            .deleteOne(query)
+            .then(result => resolve(result))
+            .catch(err => reject(err));
+        });
+    };
+
+    async updateOne(filter: Query<T>, media: Media) {
+        return new Promise((resolve, reject) => {
+            this.getCollection()
+            .findOneAndReplace(filter, media)
+            .then(result => resolve(result))
+            .catch(err => reject(err));
+        });
+    };
+
     findById(id: string): Promise<T | null> {
         return new Promise((resolve, reject) => {
             this.getCollection()
@@ -70,4 +89,27 @@ export class BaseRepository<T extends BaseModel> {
             .catch(err => reject(err));
         });
     };
+
+    /*miMetodo(query: Query<T>): Promise<T | null> {
+        console.log(query);
+
+        return new Promise((resolve, reject) => {
+            this.getCollection()
+            .findOne(query)
+            .then(result => resolve(result))
+            .catch(err => reject(err));
+        });
+    };
+
+    findGreaterOrEqualRating(query: Query<T>): Promise<T[]> {
+        console.log(query);
+
+        return new Promise((resolve, reject) => {
+            this.getCollection()
+            .find(query)
+            .toArray()
+            .then(result => resolve(result))
+            .catch(err => reject(err));
+        });
+    };*/
 };
