@@ -8,8 +8,7 @@ export class MediaController {
     constructor(service: MediaService) {
         this.service = service;
         this.router = express.Router();
-
-        console.log("you are here");
+        
         //this.router.get("/rating/:value", (req, res) => this.greaterOrEqualRating(req, res));
         this.router.get("/tags/:id", (req, res) => this.getMediaByIDTag(req, res));
         this.router.get("/:id", (req, res) => this.getMediaByID(req, res));
