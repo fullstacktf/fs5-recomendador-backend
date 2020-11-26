@@ -8,7 +8,7 @@ export class MediaController {
     constructor(service: MediaService) {
         this.service = service;
         this.router = express.Router();
-        
+
         //this.router.get("/rating/:value", (req, res) => this.greaterOrEqualRating(req, res));
         this.router.get("/tags/:id", (req, res) => this.getMediaByIDTag(req, res));
         this.router.get("/:id", (req, res) => this.getMediaByID(req, res));
@@ -27,8 +27,8 @@ export class MediaController {
     };
 
     private async getMediaByID(req: Request, res: Response) {
-        const miMedia = await this.service.getMediaByID(req.params.id);
-        res.json({result: miMedia});
+        const myMedia = await this.service.getMediaByID(req.params.id);
+        res.json({result: myMedia});
     };
 
     private async newMedia(req: Request, res: Response) {
@@ -47,7 +47,6 @@ export class MediaController {
     };
 
     private async getMediaByIDTag(req: Request, res: Response) {
-        console.log("Looking for media tagged as", req.params.id);
         const media = await this.service.getMediaByIDTag(req.params.id);
         res.json({result: media});
     };
