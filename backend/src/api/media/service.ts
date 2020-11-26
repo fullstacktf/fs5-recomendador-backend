@@ -9,7 +9,7 @@ export class MediaService {
     };
 
     async getAllMedia() {
-        return this.repository.findAll();        
+        return this.repository.findInCollection();        
     };
 
     async getMediaByID(id: string) {
@@ -31,7 +31,12 @@ export class MediaService {
         const idMedia = newMedia.id;
 
         return this.repository.updateOne({id: idMedia}, newMedia);
-    }
+    };
+
+    async getMediaByIDTag(id: string) {
+        const tagID = Number(id);
+        return this.repository.find({ "tags.id": tagID });
+    };
 
     /*async greaterOrEqualRating(value: string) {
         const newValue = Number(value);

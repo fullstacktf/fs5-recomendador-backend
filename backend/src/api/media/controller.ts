@@ -11,6 +11,7 @@ export class MediaController {
 
         console.log("you are here");
         //this.router.get("/rating/:value", (req, res) => this.greaterOrEqualRating(req, res));
+        this.router.get("/tags/:id", (req, res) => this.getMediaByIDTag(req, res));
         this.router.get("/:id", (req, res) => this.getMediaByID(req, res));
         this.router.get("/", (req, res) => this.getAllMedia(req, res));
         
@@ -37,14 +38,20 @@ export class MediaController {
     };
 
     private async deleteMedia(req: Request, res: Response) {
-        this.service.deleteMedia(req.params.id);
+        await this.service.deleteMedia(req.params.id);
         res.json({message: "Media deleted!"});
     };
 
     private async updateMedia(req: Request, res: Response) {
-        this.service.updateMedia(req.body);
+        await this.service.updateMedia(req.body);
         res.json({message: "Media updated!"});
-    }
+    };
+
+    private async getMediaByIDTag(req: Request, res: Response) {
+        console.log("Looking for media tagged as", req.params.id);
+        const media = await this.service.getMediaByIDTag(req.params.id);
+        res.json({result: media});
+    };
 
     /*private async greaterOrEqualRating(req: Request, res: Response) {
         const result = await this.service.greaterOrEqualRating(req.params.value);

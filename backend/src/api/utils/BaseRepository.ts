@@ -43,13 +43,24 @@ export class BaseRepository<T extends BaseModel> {
         });
     };
 
-    findAll(limit: number = 10): Promise<T[]> {
+    findInCollection(limit: number = 50): Promise<T[]> {
         return new Promise((resolve, reject) => {
             this.getCollection()
             .find()
             .limit(limit)
             .toArray()
             .then(element => resolve(element))
+            .catch(err => reject(err));
+        });
+    };
+
+    find(query: Query<T>, limit: number = 50): Promise<T[]> {
+        return new Promise((resolve, reject) => {
+            this.getCollection()
+            .find(query)
+            .limit(limit)
+            .toArray()
+            .then(result => resolve(result))
             .catch(err => reject(err));
         });
     };
