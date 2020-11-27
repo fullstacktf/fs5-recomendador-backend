@@ -12,7 +12,7 @@ export class Database {
         console.log('Reading from database');
       
         return new Promise((resolve, reject) => {
-            MongoClient.connect('mongodb://localhost/urecommendme', { useUnifiedTopology: true }, (error, client) => {
+            MongoClient.connect('mongodb://127.0.0.1/urecommendme', { useUnifiedTopology: true }, (error, client) => {
                 if (error) {
                     reject('Error database connection');
                 } else {
