@@ -11,4 +11,9 @@ export class UserService {
     async getAllUsers() {
         return this.repository.findInCollection();
     };
+
+    async getUserByID(id: string) {
+        const numberID = Number(id);
+        return this.repository.findOne({id: numberID});
+    };
 };

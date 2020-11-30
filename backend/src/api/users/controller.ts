@@ -11,7 +11,7 @@ export class UserController {
 
         //this.router.get("/rating/:value", (req, res) => this.greaterOrEqualRating(req, res));
         //this.router.get("/tags/:id", (req, res) => this.getMediaByIDTag(req, res));
-        //this.router.get("/:id", (req, res) => this.getMediaByID(req, res));
+        this.router.get("/:id", (req, res) => this.getUserByID(req, res));
         this.router.get("/", (req, res) => this.getAllUsers(req, res));
         
         //this.router.post("/", (req, res) => this.newMedia(req, res));
@@ -25,4 +25,9 @@ export class UserController {
         const allUsers = await this.service.getAllUsers();
         res.json({values: allUsers.length, result: allUsers});
     };
+
+    private async getUserByID(req: Request, res: Response) {
+        const myUser = await this.service.getUserByID(req.params.id);
+        res.json({result: myUser});
+    }
 };
