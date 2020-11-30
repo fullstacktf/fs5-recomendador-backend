@@ -5,7 +5,7 @@ interface TagListItem {
     name: string;
 };
 
-interface RatingListItem {
+export interface RatingListItem {
     id: number;
     rating: number;
 };
