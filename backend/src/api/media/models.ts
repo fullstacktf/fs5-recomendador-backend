@@ -1,11 +1,11 @@
 import { BaseModel } from "../../helpers/Database";
 
-interface TagList {
+interface TagListItem {
     id: number;
     name: string;
 };
 
-interface RatingList {
+interface RatingListItem {
     id: number;
     rating: number;
 };
@@ -19,7 +19,7 @@ export interface Media extends BaseModel {
     overview: string;
     release_date: string;
     runtime: number;
-    tags: TagList[];
-    ratings: RatingList[];
+    tags: TagListItem[];
+    ratings: RatingListItem[];
     rating: number;
 };
