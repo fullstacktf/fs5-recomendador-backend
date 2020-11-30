@@ -11,11 +11,7 @@ export class UserController {
 
         this.router.get("/:id", (req, res) => this.getUserByID(req, res));
         this.router.get("/", (req, res) => this.getAllUsers(req, res));
-        
-        //this.router.post("/", (req, res) => this.newMedia(req, res));
-        
-        //this.router.delete("/:id", (req, res) => this.deleteMedia(req, res));
-        
+        this.router.delete("/:id", (req, res) => this.deleteUser(req, res));
         this.router.put("/:id", (req, res) => this.updateUser(req, res));
     };
 
@@ -32,5 +28,10 @@ export class UserController {
     private async updateUser(req: Request, res: Response) {
         await this.service.updateUser(req.body);
         res.json({message: "User updated!"});
+    };
+
+    private async deleteUser(req: Request, res: Response) {
+        await this.service.deleteUser(req.params.id);
+        res.json({message: "User deleted!"});
     };
 };

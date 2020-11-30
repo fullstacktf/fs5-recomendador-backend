@@ -23,4 +23,9 @@ export class UserService {
 
         return this.repository.updateOne({id: idUser}, newUser);
     };
+
+    async deleteUser(id: string) {
+        const numberID = Number(id);
+        return this.repository.deleteOne({id: numberID})
+    };
 };
