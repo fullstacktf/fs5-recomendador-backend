@@ -1,4 +1,5 @@
 import { Media } from "../media/models";
+import { User } from "../users/models";
 import { Collection, FilterQuery, ObjectId, OptionalId, UpdateQuery } from 'mongodb';
 import { BaseModel, Database } from '../../helpers/Database';
 
@@ -83,10 +84,10 @@ export class BaseRepository<T extends BaseModel> {
         });
     };
 
-    async updateOne(filter: Query<T>, media: Media) {
+    async updateOne(filter: Query<T>, item: Media | User) {
         return new Promise((resolve, reject) => {
             this.getCollection()
-            .findOneAndReplace(filter, media)
+            .findOneAndReplace(filter, item)
             .then(result => resolve(result))
             .catch(err => reject(err));
         });

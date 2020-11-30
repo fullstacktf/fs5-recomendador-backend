@@ -16,4 +16,11 @@ export class UserService {
         const numberID = Number(id);
         return this.repository.findOne({id: numberID});
     };
+
+    async updateUser(user: User) {
+        const newUser = user;
+        const idUser = newUser.id;
+
+        return this.repository.updateOne({id: idUser}, newUser);
+    };
 };
