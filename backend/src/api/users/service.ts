@@ -28,4 +28,8 @@ export class UserService {
         const numberID = Number(id);
         return this.repository.deleteOne({id: numberID})
     };
+
+    async newUser(user: User) {
+        return this.repository.save(user);
+    }
 };
