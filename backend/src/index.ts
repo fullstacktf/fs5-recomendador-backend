@@ -1,6 +1,7 @@
 import express from 'express';
 import { Database } from './helpers/Database';
 import { generateMediaRouter } from "./api/media";
+import { generateUserRouter } from "./api/users";
 
 const app = express();
 app.use(express.json());
@@ -9,6 +10,8 @@ const PORT = 8080;
 const database: Database = new Database();
 
 app.use("/media", generateMediaRouter(database));
+app.use("/users", generateUserRouter(database));
+
 app.get('/', (req, res) => {
     res.json({message: "Welcome to uRecommend.me!"})
 });
