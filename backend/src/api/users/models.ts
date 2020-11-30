@@ -7,4 +7,4 @@ export interface User extends BaseModel {
     password: string;
     email: string;
     ratings: RatingListItem[];
-}
+};
