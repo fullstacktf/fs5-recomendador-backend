@@ -3,7 +3,7 @@ import { TagRepository } from "./repository";
 import { TagService } from "./service";
 import { TagController } from "./controller";
 
-export const generateMediaRouter = (database: Database) => {
+export const generateTagRouter = (database: Database) => {
     const tagRepository = new TagRepository(database);
     const tagService = new TagService(tagRepository);
     const tagRouter = new TagController(tagService);
