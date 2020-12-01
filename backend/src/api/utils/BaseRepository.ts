@@ -84,7 +84,7 @@ export class BaseRepository<T extends BaseModel> {
         });
     };
 
-    async updateOne(filter: Query<T>, item: Media | User) {
+    async updateOne(filter: Query<T>, item: any) {
         return new Promise((resolve, reject) => {
             this.getCollection()
             .findOneAndReplace(filter, item)
