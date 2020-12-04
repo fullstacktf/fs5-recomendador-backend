@@ -72,4 +72,4 @@ users|DELETE|/users/:id\_user|users|Delete user
 users|GET|/users|admin|Return a list of all users
 users|GET|/users/:id\_user|admin|Return a specific user by id\_user
 users|PUT|/users/:id\_user|users|Update user info by id\_user
-users|POST|/users/:id\_user|users|Create new user
+users|POST|/users|users|Create new user
