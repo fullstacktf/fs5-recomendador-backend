@@ -32,6 +32,25 @@ The documents in this collections have the following media objects:
 `tags`|array of `tags` items| Media tags in format `{id: number, name: string}`
 `ratings`|array of `ratings` items| Media ratings from users in format `{id: number, rating: number}`
 
+### `tags` collection
+The documents in this collections have the following tag objects:
+
+**KEY**|**TYPE**|**VEXPLANATION**
+:-----:|:-----:|:-----
+`id`|string| ID of tag document
+`name`|string| Tag name
+`media`|array of `id: number` from `media` items| Media tagged
+
+### `users` collection
+The documents in this collections have the following user objects:
+
+**KEY**|**TYPE**|**VEXPLANATION**
+:-----:|:-----:|:-----
+`id`|string| ID of user document
+`name`|string| Username
+`password`|string| User password
+`email`|string| User email
+`ratings`|array of `ratings` items| Media rated by the user in format `{id: number, rating: number}`
 
 
 ## Endpoints definition
@@ -45,13 +64,12 @@ media|GET|/media/:id\_media|users|Returns a media by id\_media
 media|GET|/media/tag/:id\_tag|users|Returns all media items tagged by id\_tag
 media|POST|/media|admin|New media item
 media|PUT|/media/:id\_media|admin|Update media by id\_media
-mediatags|POST|/mediatags|admin|New mediatag (add a EXISTING tag to a movie)
-mediatags|PUT|/mediatags/:id\_media|admin|Update the tags of id\_media
-ratings|PUT|/ratings/:id\_user/:id\_media|users|Update the rating of id\_user for id\_media
 tags|DELETE|/tags/:id\_tag|admin|Delete the tag id\_tag
 tags|GET|/tags|users|Return a list of all tags
+tags|GET|/tags/:id\_tag|users|Return a specific tag by id\_tag
 tags|POST|/tags|admin|New tag
 users|DELETE|/users/:id\_user|users|Delete user
 users|GET|/users|admin|Return a list of all users
 users|GET|/users/:id\_user|admin|Return a specific user by id\_user
 users|PUT|/users/:id\_user|users|Update user info by id\_user
+users|POST|/users/:id\_user|users|Create new user
