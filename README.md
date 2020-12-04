@@ -14,9 +14,25 @@ As the original datasets is about 1Gb of data, we decided to preprocess this raw
 This data has been cleaned and proccessed in order to fullfill the requirements of the database schema.
 
 ## Database schema
-This is the first version of our relational database schema.
+Our database `urecommendme` has three (3) collections named `media`, `tags` and `users`.
 
-![Database schema](./static-files/db-schema.png)
+### `media` collection
+The documents in this collections have the following media objects:
+
+**KEY**|**TYPE**|**VEXPLANATION**
+:-----:|:-----:|:-----
+`id`|string| ID of media document
+`original_language`|string| Original media language
+`original_title`|string| Original media title
+`overview`|string| Media overview
+`release_date`|string| Media release date
+`runtime`|number| Media length
+`title`|string| Media title (default)
+`rating`|number| Media rating
+`tags`|array of `tags` items| Media tags in format `{id: number, name: string}`
+`ratings`|array of `ratings` items| Media ratings from users in format `{id: number, rating: number}`
+
+
 
 ## Endpoints definition
 In the above table there is a detailed information about the endpoints of our app.
