@@ -2,6 +2,7 @@ import { MediaRepository } from '../repository';
 import { MediaService } from '../service';
 import { Database } from '../../../helpers/Database';
 import { Media } from "../models";
+import { Tag } from "../../tags/models";
 
 class TestMediaRepository extends MediaRepository {
     constructor() {
@@ -22,7 +23,21 @@ class TestMediaRepository extends MediaRepository {
         return new Promise((resolve, reject) => {
             resolve(m);
         });
-    }
+    };
+
+    async deleteOne(m: Media) {
+        return {message: "Media deleted!"};
+    };
+
+    async updateOne(m: Media) {
+        return {message: "Media updated!"};
+    };
+
+    async find(): Promise<Media[]> {
+        return new Promise((resolve, reject) => {
+            resolve([{id: 1} as Media, {id: 2} as Media]);
+        });
+    };
 };
 
 describe("MEDIA", () => {
@@ -55,5 +70,35 @@ describe("MEDIA", () => {
         const result = await fakeService.getMediaByID(id);
 
         expect(result).toMatchObject(media);
+    });
+
+    it("Delete Media item by ID", async() => {
+        const fakeRepository = new TestMediaRepository();
+        const fakeService = new MediaService(fakeRepository);
+
+        const id = "123";
+        const result = await fakeService.deleteMedia(id);
+
+        expect(result).toStrictEqual({message: "Media deleted!"});
+    });
+
+    it("Update Media item by ID", async() => {
+        const fakeRepository = new TestMediaRepository();
+        const fakeService = new MediaService(fakeRepository);
+
+        const media = {id: 123} as Media;
+        const result = await fakeService.updateMedia(media);
+
+        expect(result).toStrictEqual({message: "Media updated!"});
+    });
+
+    it("Get all Media items tagged by ID tag", async() => {
+        const fakeRepository = new TestMediaRepository();
+        const fakeService = new MediaService(fakeRepository);
+
+        const tag = "123";
+        const result = await fakeService.getMediaByIDTag(tag);
+
+        expect(result.length).toBe(2);
     });
 });
