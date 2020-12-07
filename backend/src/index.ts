@@ -4,6 +4,7 @@ import { generateMediaRouter } from "./api/media";
 import { generateUserRouter } from "./api/users";
 import { generateTagRouter } from "./api/tags";
 
+
 const app = express();
 app.use(express.json());
 
