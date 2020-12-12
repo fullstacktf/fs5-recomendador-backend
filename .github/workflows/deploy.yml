@@ -3,7 +3,7 @@ name: Deploy app
 on:
   push:
     branches:
-      - main
+      - test-media
 
 jobs:
   build_image_and_push:
