@@ -26,3 +26,4 @@ jobs:
           context: backend/
           file: Dockerfile
           push: true
+          tags: urecommendme/backend:latest
