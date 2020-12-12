@@ -14,7 +14,13 @@ jobs:
         with:
           node-version: "10.19.0"
 
-      - run: |
+      - name: Install packages & build project 
+        run: |
               cd backend/
               npm install
               npm run build
+      
+      - name: Tests
+        run: |
+              cd backend/
+              npm run test
