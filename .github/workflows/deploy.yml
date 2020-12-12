@@ -1,0 +1,22 @@
+name: Deploy app
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_image_and_push:
+    name: Build and push image to Docker Hub
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Push to Docker Hub
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          repository: urecommendme/backend
+            tag_with_ref: true
