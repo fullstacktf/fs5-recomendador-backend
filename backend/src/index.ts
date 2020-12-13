@@ -8,7 +8,7 @@ import { generateTagRouter } from "./api/tags";
 const app = express();
 app.use(express.json());
 
-const PORT = 8080;
+const PORT = 3000;
 const database: Database = new Database();
 
 app.use("/media", generateMediaRouter(database));
