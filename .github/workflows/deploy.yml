@@ -17,7 +17,6 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           debug: true
           script: |
-                    cd fs5-recomendador-backend/
                     git clone https://github.com/fullstacktf/fs5-recomendador-backend.git
                     docker stop recomendador_backend
                     docker container rm recomendador_backend
