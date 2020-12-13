@@ -18,11 +18,8 @@ jobs:
           debug: true
           script: |
                     git clone https://github.com/fullstacktf/fs5-recomendador-backend.git
-                    docker stop recomendador_backend
-                    docker container rm recomendador_backend
-                    docker rmi fs5-recomendador-backend_server
-                    docker stop recomendador_db
-                    docker container rm recomendador_db
-                    docker rmi fs5-recomendador-backend_db
+                    cd fs5-recomendador-backend/
+                    docker-compose down
+                    docker stop $(docker ps -a -q)
                     docker-compose up -d
   
