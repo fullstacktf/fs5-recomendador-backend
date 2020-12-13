@@ -31,17 +31,46 @@ jobs:
           push: true
           tags: urecommendme/backend:latest
 
-  deploy_new_image:
-    needs: [build_image_and_push]
+  update_dockerhub_image:
+    needs: build_image_and_push
     name: Deploy the new image for backend in the server
     runs-on: ubuntu-latest
     steps:
-      - name: Execute SSH Command
+      - name: copy docker-compose.yml file
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
-          script: |
-            pwd
-            ls -la
+          source: "./docker-compose.yml"
+          target: "docker-compose-back"
+
+      - name: copy database
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          source: "./database"
+          target: "docker-compose-back"
+
+  execute-docker-compose-droplet:
+    runs-on: ubuntu-latest
+    needs: update_dockerhub_image
+
+    steps:
+      - name: Run docker-compose SSH command
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          script: | 
+              cd docker-compose-back
+              docker stop recomendador_backend
+              docker container rm recomendador_backend
+              docker rmi urecommendme/backend
+              docker stop recomendador_db
+              docker container rm recomendador_db
+              docker rmi mongo:3.6
+              docker-compose up -d
