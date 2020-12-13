@@ -1,16 +1,5 @@
 version: "3.5"
 services:
-  server:
-    build:
-      context: "./backend"
-      dockerfile: "Dockerfile"
-    container_name: "recomendador_backend"
-    depends_on:
-      - db
-    ports:
-      - "3000:3000"
-    networks:
-      - backend
   db:
     image: mongo:3.6
     container_name: "recomendador_db"
@@ -22,6 +11,20 @@ services:
       - ./database/scripts:/docker-entrypoint-initdb.d
     ports:
       - "27017:27017"
+
+  server:
+    build:
+      context: "./backend"
+      dockerfile: "Dockerfile"
+    container_name: "recomendador_backend"
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    networks:
+      - backend
+    links:
+      - db
 
 networks:
   backend:
