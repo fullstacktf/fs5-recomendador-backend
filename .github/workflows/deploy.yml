@@ -22,6 +22,6 @@ jobs:
                     git pull https://github.com/fullstacktf/fs5-recomendador-backend.git
                     git checkout -b test-media
                     docker-compose down
-                    docker stop $(docker ps -a -q)
+                    docker rmi -f $(docker images -a -q)
                     docker-compose up -d
   
