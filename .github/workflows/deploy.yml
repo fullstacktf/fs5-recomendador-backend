@@ -1,9 +1,6 @@
 name: Deploy app
 
 on:
-  pull-request:
-    branches:
-      - main
   push:
     branches:
       - main
