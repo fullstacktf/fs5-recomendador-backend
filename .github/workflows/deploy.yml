@@ -3,7 +3,7 @@ name: Deploy app
 on:
   push:
     branches:
-      - test-media
+      - main
 
 jobs:
   deploy:
@@ -19,6 +19,7 @@ jobs:
           script: |
                     rm -Rf fs5-recomendador-backend/
                     git clone https://github.com/fullstacktf/fs5-recomendador-backend.git
+                    cd fs5-recomendador-backend/
                     git checkout -b test-media
                     docker-compose down
                     docker rmi -f $(docker images -a -q)
