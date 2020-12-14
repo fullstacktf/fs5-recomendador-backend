@@ -23,8 +23,6 @@ services:
       - "3000:3000"
     networks:
       - backend
-    links:
-      - db
 
 networks:
   backend:
