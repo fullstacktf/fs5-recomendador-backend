@@ -1,5 +1,16 @@
 version: "3.5"
 services:
+  reverse-proxy:
+    image: nginx:1.17.10
+    container_name: reverseproxy
+    depends_on:
+      - db
+      - server
+    volumes:
+       - ./nginx-conf/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+
   db:
     image: mongo:3.6
     container_name: "recomendador_db"
