@@ -1,0 +1,27 @@
+name: Deploy app
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to droplet using SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          debug: true
+          script: |
+                    rm -Rf fs5-recomendador-backend/
+                    git clone https://github.com/fullstacktf/fs5-recomendador-backend.git
+                    cd fs5-recomendador-backend/
+                    git checkout -b test-media
+                    docker-compose down
+                    docker rmi -f $(docker images -a -q)
+                    docker-compose up -d
+  

@@ -23,7 +23,7 @@ export class MediaController {
 
     private async getAllMedia(req: Request, res: Response) {
         const allMedia = await this.service.getAllMedia();
-        res.json({values: allMedia.length, result: allMedia});
+        res.json({result: allMedia});
     };
 
     private async getMediaByID(req: Request, res: Response) {
