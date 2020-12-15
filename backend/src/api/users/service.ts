@@ -19,8 +19,14 @@ export class UserService {
     };
 
     async getUserByID(id: string) {
-        const numberID = Number(id);
-        return this.repository.findOne({id: numberID});
+        try {
+            const numberID = Number(id);
+            const userResult = await this.repository.findOne({id: numberID});
+            
+            return userResult;
+        } catch (error) {
+            return {message: "Error retrieving user"};
+        };
     };
 
     async updateUser(user: User) {

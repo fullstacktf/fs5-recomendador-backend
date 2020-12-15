@@ -19,6 +19,14 @@ class TestUserRepository extends UserRepository {
     async findInCollection(): Promise<User[]> {
         return Promise.resolve([{id: 1} as User, {id: 2} as User]);
     };
+
+    async findOne(query: any): Promise<User | null> {
+        if (query.id === 123) {
+            return Promise.resolve({id: 123, name: "user123"} as User);
+        } else {
+            return Promise.reject("Error finding user");
+        };
+    };
 };
 
 describe("USERS", () => {
@@ -49,5 +57,15 @@ describe("USERS", () => {
         const result = await sut.getAllUsers();
 
         expect(result.nResults).toBeGreaterThan(1);
+    });
+
+    it("Should return a user by ID", async() => {
+        const fakeRepository = new TestUserRepository();
+        const userTestID = "123";
+        const sut = new UserService(fakeRepository);
+
+        const result = await sut.getUserByID(userTestID);
+
+        expect(result).toStrictEqual({id: 123, name: "user123"});
     });
 });
