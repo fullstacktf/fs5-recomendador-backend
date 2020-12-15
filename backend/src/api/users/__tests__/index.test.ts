@@ -117,11 +117,21 @@ describe("USERS", () => {
 
     it("Should update user by ID", async() => {
         const fakeRepository = new TestUserRepository();
-        const media = {id: 123, name: "user123"} as User;
+        const user = {id: 123, name: "user123"} as User;
         const sut = new UserService(fakeRepository);
 
-        const result = await sut.updateUser(media);
+        const result = await sut.updateUser(user);
 
         expect(result).toStrictEqual({message: "User updated"});
+    });
+
+    it("Should return an error when updating an user by ID", async() => {
+        const fakeRepository = new TestUserRepository();
+        const user = {id: 456, name: "user456"} as User;
+        const sut = new UserService(fakeRepository);
+
+        const result = await sut.updateUser(user);
+
+        expect(result).toStrictEqual({message: "Error updating user"});
     });
 });
