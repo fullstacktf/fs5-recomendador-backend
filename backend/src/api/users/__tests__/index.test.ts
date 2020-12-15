@@ -68,4 +68,14 @@ describe("USERS", () => {
 
         expect(result).toStrictEqual({id: 123, name: "user123"});
     });
+
+    it("Should return an error when retrieving an user by ID", async() => {
+        const fakeRepository = new TestUserRepository();
+        const userTestID = "456";
+        const sut = new UserService(fakeRepository);
+
+        const result = await sut.getUserByID(userTestID);
+
+        expect(result).toMatchObject({message: "Error retrieving user"});
+    });
 });
