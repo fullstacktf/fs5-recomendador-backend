@@ -18,7 +18,7 @@ export class UserController {
 
     private async getAllUsers(req: Request, res: Response) {
         const allUsers = await this.service.getAllUsers();
-        res.json({values: allUsers.length, result: allUsers});
+        res.json({result: allUsers});
     };
 
     private async getUserByID(req: Request, res: Response) {
