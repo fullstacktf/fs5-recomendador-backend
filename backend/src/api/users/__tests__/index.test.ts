@@ -27,6 +27,14 @@ class TestUserRepository extends UserRepository {
             return Promise.reject("Error finding user");
         };
     };
+
+    async deleteOne(query: any) {
+        if (query.id === 123) {
+            return Promise.resolve("User deleted successfully");
+        } else {
+            return Promise.reject("Error deleting user");
+        };
+    };
 };
 
 describe("USERS", () => {
@@ -77,5 +85,15 @@ describe("USERS", () => {
         const result = await sut.getUserByID(userTestID);
 
         expect(result).toMatchObject({message: "Error retrieving user"});
+    });
+
+    it("Should delete an user by ID", async() => {
+        const fakeRepository = new TestUserRepository();
+        const userTestID = "123";
+        const sut = new UserService(fakeRepository);
+
+        const result = await sut.deleteUser(userTestID);
+
+        expect(result).toStrictEqual({message: "User deleted"});
     });
 });

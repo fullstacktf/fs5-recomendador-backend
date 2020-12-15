@@ -37,8 +37,13 @@ export class UserService {
     };
 
     async deleteUser(id: string) {
-        const numberID = Number(id);
-        return this.repository.deleteOne({id: numberID})
+        try {
+            const numberID = Number(id);
+            const deletedUser = await this.repository.deleteOne({id: numberID})
+            return {message: "User deleted"};
+        } catch (error) {
+            return {message: "Error deleting user"};
+        };
     };
 
     async newUser(user: User) {
