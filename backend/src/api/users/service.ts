@@ -30,6 +30,11 @@ export class UserService {
     };
 
     async newUser(user: User) {
-        return this.repository.save(user);
-    }
+        try {
+            const savedUser = await this.repository.save(user);
+            return {message: "User added!"};
+        } catch (error) {
+            return {message: "Error adding user"};
+        };     
+    };
 };
