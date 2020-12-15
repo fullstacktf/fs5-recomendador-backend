@@ -20,7 +20,7 @@ export class TagController {
 
     private async getAllTags(req: Request, res: Response) {
         const allTags = await this.service.getAllTags();
-        res.json({values: allTags.length, result: allTags});
+        res.json({result: allTags});
     };
 
     private async newTag(req: Request, res: Response) {
