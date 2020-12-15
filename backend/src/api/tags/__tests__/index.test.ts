@@ -87,10 +87,10 @@ describe("TAGS", () => {
 
     it("Should return an error when retrieving a tag item by ID", async() => {
         const fakeRepository = new TestTagRepository();
-        const mediaTestID = "456";
+        const tagTestID = "456";
         const sut = new TagService(fakeRepository);
 
-        const result = await sut.getTagByID(mediaTestID);
+        const result = await sut.getTagByID(tagTestID);
 
         expect(result).toMatchObject({message: "Error retrieving tag"});
     });
@@ -105,7 +105,7 @@ describe("TAGS", () => {
         expect(result).toStrictEqual({message: "Tag deleted"});
     });
 
-    it("Should return an error when deleting a media item by ID", async() => {
+    it("Should return an error when deleting a tag item by ID", async() => {
         const fakeRepository = new TestTagRepository();
         const tagTestID = "456";
         const sut = new TagService(fakeRepository);
