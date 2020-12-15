@@ -27,4 +27,14 @@ describe("USERS", () => {
 
         expect(result).toStrictEqual({message: "User added!"});
     });
+
+    it("Should send an error when database is down", async() => {
+        const fakeRepository = new TestUserRepository();
+        const user = {id: 12345, name: "error"} as User;
+        const sut = new UserService(fakeRepository);
+        
+        const result = await sut.newUser(user);
+
+        expect(result).toStrictEqual({message: "Error adding user"});
+    });
 });
