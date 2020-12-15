@@ -15,6 +15,10 @@ class TestUserRepository extends UserRepository {
             return Promise.resolve("user saved!");
         };
     };
+
+    async findInCollection(): Promise<User[]> {
+        return Promise.resolve([{id: 1} as User, {id: 2} as User]);
+    };
 };
 
 describe("USERS", () => {
@@ -36,5 +40,14 @@ describe("USERS", () => {
         const result = await sut.newUser(user);
 
         expect(result).toStrictEqual({message: "Error adding user"});
+    });
+
+    it("Should return all users", async() => {
+        const fakeRepository = new TestUserRepository();
+        const sut = new UserService(fakeRepository);
+
+        const result = await sut.getAllUsers();
+
+        expect(result.nResults).toBeGreaterThan(1);
     });
 });

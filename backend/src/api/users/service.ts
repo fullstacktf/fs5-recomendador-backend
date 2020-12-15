@@ -9,7 +9,13 @@ export class UserService {
     };
 
     async getAllUsers() {
-        return this.repository.findInCollection();
+        try {
+            const allUsers = await this.repository.findInCollection();
+
+            return {nResults: allUsers.length, results: allUsers};
+        } catch (error) {
+            return {message: "Error retrieving all users"};
+        };    
     };
 
     async getUserByID(id: string) {
