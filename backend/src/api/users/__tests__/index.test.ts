@@ -35,6 +35,14 @@ class TestUserRepository extends UserRepository {
             return Promise.reject("Error deleting user");
         };
     };
+
+    async updateOne(u: User) {
+        if (u.id === 123) {
+            return Promise.resolve("User updated successfully")
+        } else {
+            return Promise.reject("Error updating user")
+        };
+    };
 };
 
 describe("USERS", () => {
@@ -105,5 +113,15 @@ describe("USERS", () => {
         const result = await sut.deleteUser(userTestID);
 
         expect(result).toStrictEqual({message: "Error deleting user"});
+    });
+
+    it("Should update user by ID", async() => {
+        const fakeRepository = new TestUserRepository();
+        const media = {id: 123, name: "user123"} as User;
+        const sut = new UserService(fakeRepository);
+
+        const result = await sut.updateUser(media);
+
+        expect(result).toStrictEqual({message: "User updated"});
     });
 });

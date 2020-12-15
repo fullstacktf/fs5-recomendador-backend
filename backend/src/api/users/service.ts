@@ -30,10 +30,14 @@ export class UserService {
     };
 
     async updateUser(user: User) {
-        const newUser = user;
-        const idUser = newUser.id;
-
-        return this.repository.updateOne({id: idUser}, newUser);
+        try {
+            const newUser = user;
+            const idUser = newUser.id;
+            const muserUpdated = await this.repository.updateOne({id: idUser}, newUser);
+            return {message: "User updated"};
+        } catch (error) {
+            return {message: "Error updating user"};
+        };        
     };
 
     async deleteUser(id: string) {
