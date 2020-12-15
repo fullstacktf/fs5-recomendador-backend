@@ -96,4 +96,14 @@ describe("USERS", () => {
 
         expect(result).toStrictEqual({message: "User deleted"});
     });
+
+    it("Should return an error when deleting an user by ID", async() => {
+        const fakeRepository = new TestUserRepository();
+        const userTestID = "456";
+        const sut = new UserService(fakeRepository);
+
+        const result = await sut.deleteUser(userTestID);
+
+        expect(result).toStrictEqual({message: "Error deleting user"});
+    });
 });
