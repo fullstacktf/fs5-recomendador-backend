@@ -9,27 +9,53 @@ export class UserService {
     };
 
     async getAllUsers() {
-        return this.repository.findInCollection();
+        try {
+            const allUsers = await this.repository.findInCollection();
+
+            return {nResults: allUsers.length, results: allUsers};
+        } catch (error) {
+            return {message: "Error retrieving all users"};
+        };    
     };
 
     async getUserByID(id: string) {
-        const numberID = Number(id);
-        return this.repository.findOne({id: numberID});
+        try {
+            const numberID = Number(id);
+            const userResult = await this.repository.findOne({id: numberID});
+            
+            return userResult;
+        } catch (error) {
+            return {message: "Error retrieving user"};
+        };
     };
 
     async updateUser(user: User) {
-        const newUser = user;
-        const idUser = newUser.id;
-
-        return this.repository.updateOne({id: idUser}, newUser);
+        try {
+            const newUser = user;
+            const idUser = newUser.id;
+            const muserUpdated = await this.repository.updateOne({id: idUser}, newUser);
+            return {message: "User updated"};
+        } catch (error) {
+            return {message: "Error updating user"};
+        };        
     };
 
     async deleteUser(id: string) {
-        const numberID = Number(id);
-        return this.repository.deleteOne({id: numberID})
+        try {
+            const numberID = Number(id);
+            const deletedUser = await this.repository.deleteOne({id: numberID})
+            return {message: "User deleted"};
+        } catch (error) {
+            return {message: "Error deleting user"};
+        };
     };
 
     async newUser(user: User) {
-        return this.repository.save(user);
-    }
+        try {
+            const savedUser = await this.repository.save(user);
+            return {message: "User added!"};
+        } catch (error) {
+            return {message: "Error adding user"};
+        };     
+    };
 };
