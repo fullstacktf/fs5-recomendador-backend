@@ -1,5 +1,6 @@
 import { MediaService } from "./service";
 import express, { Router, Request, Response } from "express";
+import { request } from "http";
 
 export class MediaController {
     private service: MediaService;
@@ -10,11 +11,12 @@ export class MediaController {
         this.router = express.Router();
 
         //this.router.get("/rating/:value", (req, res) => this.greaterOrEqualRating(req, res));
-        this.router.get("/tags/:id", (req, res) => this.getMediaByIDTag(req, res));
         this.router.get("/:id", (req, res) => this.getMediaByID(req, res));
         this.router.get("/", (req, res) => this.getAllMedia(req, res));
         
         this.router.post("/", (req, res) => this.newMedia(req, res));
+        this.router.post("/tags", (req, res) => this.getMediaByIDTag(req, res));
+        this.router.post("/rate/:id", (req, res) => this.rateMedia(req, res));
         
         this.router.delete("/:id", (req, res) => this.deleteMedia(req, res));
         
@@ -47,8 +49,21 @@ export class MediaController {
     };
 
     private async getMediaByIDTag(req: Request, res: Response) {
-        const media = await this.service.getMediaByIDTag(req.params.id);
-        res.json({result: media});
+        if ((req.body.idtags) && (req.body.idtags.length > 0)) {
+            const media = await this.service.getMediaByIDTag(req.body.idtags);
+            res.json({result: media});
+        } else {
+            res.json({error: "Error retrieving media by ID tags: expected list of idtags"});
+        };
+    };
+
+    private async rateMedia(req: Request, res: Response) {
+        if ((req.body.rating) && (req.body.user)) {
+            await this.service.rateMedia(req.params.id, req.body.user, req.body.rating);
+            res.json({message: "Media rated!"});
+        } else {
+            res.json({error: "Error rating media: expected rating parameter in body"});
+        };
     };
 
     /*private async greaterOrEqualRating(req: Request, res: Response) {

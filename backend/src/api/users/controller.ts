@@ -11,8 +11,11 @@ export class UserController {
 
         this.router.get("/:id", (req, res) => this.getUserByID(req, res));
         this.router.get("/", (req, res) => this.getAllUsers(req, res));
+        
         this.router.delete("/:id", (req, res) => this.deleteUser(req, res));
+        
         this.router.put("/:id", (req, res) => this.updateUser(req, res));
+        
         this.router.post("/", (req, res) => this.newUser(req, res));
     };
 
@@ -39,5 +42,5 @@ export class UserController {
     private async newUser(req: Request, res: Response) {
         await this.service.newUser(req.body);
         res.json({message: "User added!"});
-    }
+    };
 };

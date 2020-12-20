@@ -93,10 +93,10 @@ export class BaseRepository<T extends BaseModel> {
         });
     };
 
-    findById(id: string): Promise<T | null> {
+    async update(filterID: Query<T>, updateDocument: UpdateQuery<T>) {
         return new Promise((resolve, reject) => {
             this.getCollection()
-            .findOne(this.toObjectIdFilter(id))
+            .updateOne(filterID, updateDocument)
             .then(result => resolve(result))
             .catch(err => reject(err));
         });

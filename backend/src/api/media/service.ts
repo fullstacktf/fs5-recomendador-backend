@@ -1,4 +1,4 @@
-import { Media } from "./models";
+import { Media, RatingListItem } from "./models";
 import { MediaRepository } from "./repository";
 
 export class MediaService {
@@ -59,13 +59,72 @@ export class MediaService {
         };        
     };
 
-    async getMediaByIDTag(id: string) {
+    async getMediaByIDTag(tags: string[]) {
         try {
-            const tagID = Number(id);
-            const mediaTaggedByIDtag = await this.repository.find({ "tags.id": tagID });
-            return {nResults: mediaTaggedByIDtag.length, results: mediaTaggedByIDtag};
+            console.log("here", tags);
+            let allMedia = [];
+
+            for (let t = 0; t < tags.length; t++) {
+                const tagID = Number(tags[t]);
+                const mediaTaggedByIDtag: Media[] = await this.repository.find({ "tags.id": tagID });
+
+                for (let m = 0; m < mediaTaggedByIDtag.length; m++) {
+                    allMedia.push(mediaTaggedByIDtag[m]);
+                };
+            };
+
+            const seen = new Set();
+
+            const filteredArr = allMedia.filter(el => {
+                const duplicate = seen.has(el.id);
+                seen.add(el.id);
+                return !duplicate;
+            });
+
+            filteredArr.sort((a, b) => b.rating - a.rating);
+
+            return {nResults: filteredArr.length, results: filteredArr};
         } catch (error) {
             return {message: "Error retrieving media by ID tag"};
+        };
+    };
+
+    calculateRating(ratings: RatingListItem[]) {
+        let array = [];
+
+        for (const r in ratings) {
+            array.push(ratings[r].rating);
+        };
+
+        return array.reduce((a, b) => a + b) / array.length;
+    };
+
+    async rateMedia(id: string, u: string, r: string) {
+        try {
+            const idMedia = Number(id);
+            const idUser = Number(u);        
+            const rating = Number(r);
+
+            // Delete previous user rating
+            await this.repository.update({id: idMedia}, {$pull: {ratings: {id: idUser}}});
+
+            // Add new user rating
+            await this.repository.update({id: idMedia}, {$push: {ratings: {id: idUser, rating: rating}}});
+
+            // Update media rating because of new rate
+            const media = await this.repository.findOne({id: idMedia});
+
+            if (media) {
+                const newRating = this.calculateRating(media.ratings);
+
+                await this.repository.update({id: idMedia}, {$set: {rating: newRating}});
+
+                return {message: "Media rated"};
+            } else {
+                return {message: "Error retrieving media when rating"};
+            };
+        } catch (error) {
+            return {message: "Error rating media"};
         };
     };
 
