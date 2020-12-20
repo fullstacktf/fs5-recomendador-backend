@@ -146,20 +146,20 @@ describe("MEDIA", () => {
 
     it("Should return all media items tagged by ID tag", async() => {
         const fakeRepository = new TestMediaRepository();
-        const tagID = "1000";
+        const tagsIDs = ["1000", ];
         const sut = new MediaService(fakeRepository);
 
-        const result = await sut.getMediaByIDTag(tagID);
+        const result = await sut.getMediaByIDTag(tagsIDs);
 
         expect(result.nResults).toBe(2);
     });
 
     it("Should return an error when retrieving all media items tagged by ID tag", async() => {
         const fakeRepository = new TestMediaRepository();
-        const tagID = "999";
+        const tagsIDs = ["999",];
         const sut = new MediaService(fakeRepository);
 
-        const result = await sut.getMediaByIDTag(tagID);
+        const result = await sut.getMediaByIDTag(tagsIDs);
 
         expect(result).toStrictEqual({message: "Error retrieving media by ID tag"});
     });

@@ -61,7 +61,6 @@ export class MediaService {
 
     async getMediaByIDTag(tags: string[]) {
         try {
-            console.log("here", tags);
             let allMedia = [];
 
             for (let t = 0; t < tags.length; t++) {
