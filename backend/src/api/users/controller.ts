@@ -16,7 +16,9 @@ export class UserController {
         
         this.router.put("/:id", (req, res) => this.updateUser(req, res));
         
+        this.router.post("/login", (req, res) => this.login(req, res));
         this.router.post("/", (req, res) => this.newUser(req, res));
+        this.router.post("/:id", (req, res) => this.setFavouriteTags(req, res));
     };
 
     private async getAllUsers(req: Request, res: Response) {
@@ -42,5 +44,33 @@ export class UserController {
     private async newUser(req: Request, res: Response) {
         await this.service.newUser(req.body);
         res.json({message: "User added!"});
+    };
+
+    private async setFavouriteTags(req: Request, res: Response) {
+        const userID = req.params.id;
+        const tags = req.body.tags;
+
+        await this.service.setFavouriteTags(userID, tags);
+        res.json({message: "Favourite Tags setted!"});
+    };
+
+    private async login(req: Request, res: Response) {
+        const email = req.body.email;
+        const password = req.body.password;
+
+        const isCorrect = await this.service.login(email, password);
+
+        if (isCorrect) {
+            switch (isCorrect.message) {
+                case "Password correct":
+                    res.json({check: true});
+                    break;
+                default:
+                    res.json({check: false});
+                    break;
+            };
+        } else {
+            res.json({check: false});
+        };
     };
 };

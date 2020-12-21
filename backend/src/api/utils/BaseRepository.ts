@@ -66,6 +66,18 @@ export class BaseRepository<T extends BaseModel> {
         });
     };
 
+    findMaxID(): Promise<T[]> {
+        return new Promise((resolve, reject) => {
+            this.getCollection()
+            .find()
+            .sort({id: -1})
+            .limit(1)
+            .toArray()
+            .then(result => resolve(result))
+            .catch(err => reject(err));
+        });
+    };
+
     findOne(query: Query<T>): Promise<T | null> {
         return new Promise((resolve, reject) => {
             this.getCollection()

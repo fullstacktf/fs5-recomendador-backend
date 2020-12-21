@@ -52,10 +52,47 @@ export class UserService {
 
     async newUser(user: User) {
         try {
+            const maxID: User[] = await this.repository.findMaxID();
+            user.id = maxID[0].id + 1;
+            user.ratings = [];
+            user.tags = [];
             const savedUser = await this.repository.save(user);
-            return {message: "User added!"};
+            return {message: "User added"};
         } catch (error) {
             return {message: "Error adding user"};
         };     
+    };
+
+    async setFavouriteTags(id: string, tags: string[]) {
+        try {
+            const userID = Number(id);
+
+            for (let t in tags) {
+                const newT = Number(t);
+                await this.repository.update({id: userID}, {$push: {tags: newT}});
+            };
+
+            return {message: "Favourite Tags setted"};
+        } catch (error) {
+            return {message: "Error setting favourite tags"};
+        };                
+    };
+
+    async login(email: string, p: string) {
+        try {
+            const user = await this.repository.findOne({email: email});
+
+            if (user) {
+                if (user.password === p) {
+                    return {message: "Password correct"};;
+                } else {
+                    return {message: "Password incorrect"};
+                };
+            } else {
+                return {message: "User not in database"};
+            };
+        } catch (error) {
+            return {message: "Error loggin user"};
+        };
     };
 };
