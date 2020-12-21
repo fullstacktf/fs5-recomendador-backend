@@ -43,6 +43,10 @@ class TestUserRepository extends UserRepository {
             return Promise.reject("Error updating user")
         };
     };
+
+    async findMaxID():Promise<User[]> {
+        return Promise.resolve([{id: 999} as User]);
+    };
 };
 
 describe("USERS", () => {
@@ -53,7 +57,7 @@ describe("USERS", () => {
         
         const result = await sut.newUser(user);
 
-        expect(result).toStrictEqual({message: "User added!"});
+        expect(result).toStrictEqual({message: "User added"});
     });
 
     it("Should send an error when database is down", async() => {
