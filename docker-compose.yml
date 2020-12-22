@@ -6,7 +6,6 @@ services:
     depends_on:
       - db
       - server
-      - front
     volumes:
        - ./nginx-conf/nginx.conf:/etc/nginx/nginx.conf
        - ./nginx-conf/api.urecommend.me.conf/:/etc/nginx/sites-available/api.urecommend.me.conf
