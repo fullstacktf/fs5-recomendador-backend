@@ -36,19 +36,19 @@ services:
       - "3000"
     networks:
       - backend
-
+      
   front:
     build:
       context: "../recomendador"
       dockerfile: "Dockerfile"
     container_name: "recomendador_front"
-      depends_on:
-        - db
-        - server
-      ports:
-        - "80:80"
-      networks:
-        - backend
+    depends_on:
+      - db
+      - server
+    ports:
+      - "80:80"
+    networks:
+      - backend
 
 networks:
   backend:
