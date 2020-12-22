@@ -6,6 +6,7 @@ services:
     depends_on:
       - db
       - server
+      - front
     volumes:
        - ./nginx-conf/nginx.conf:/etc/nginx/nginx.conf
        - ./nginx-conf/api.urecommend.me.conf/:/etc/nginx/sites-available/api.urecommend.me.conf
@@ -35,6 +36,19 @@ services:
       - "3000"
     networks:
       - backend
+
+  front:
+    build:
+      context: "../recomendador"
+      dockerfile: "Dockerfile"
+    container_name: "recomendador_front"
+      depends_on:
+        - db
+        - server
+      ports:
+        - "80:80"
+      networks:
+        - backend
 
 networks:
   backend:
